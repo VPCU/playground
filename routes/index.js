@@ -6,7 +6,6 @@ const needToLogin = require('../middlewares/needToLogin')
 
 /* GET home page. */
 router.get('/', [needToLogin], async (req, res, next) => {
-  console.log(req.session.user)
   res.render('index', {title: '书店', user: req.session.user})
 });
 
