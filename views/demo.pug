@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  if !success && errors
+    section
+      ul
+        each error in errors
+          ui= error.msg
+  div.container
+    div.row
+      div.col
+        p Add
+        form(action='insert' method='post')
+          .mb-3
+            label.form-label(for='insert_name') Your name
+            input#insert_name.form-control(type='text' name='name')
+          button.btn.btn-primary(type='submit') Submit
+      div.col
+        p Delete
+        form(action='delete' method='post')
+          .mb-3
+            label.form-label(for='del_id') ID
+            input#del_id.form-control(type='text' name='id')
+          button.btn.btn-primary(type='submit') Submit
+      div.col
+        p Update
+        form(action='update' method='post')
+          .mb-3
+            label.form-label(for='update_id') ID
+            input#update_id.form-control(type='text' name='id')
+            label.form-label(for='update_name') Your name
+            input#update_name.form-control(type='text' name='name')
+          button.btn.btn-primary(type='submit') Submit
+      div.col
+        p Query
+        each result in query_result
+          p
+            div id: #{result.id}
+            div name: #{result.name}
+

@@ -1,0 +1,6 @@
+extends layout
+
+block content
+    div= result.ok ? "注册成功": "注册失败"
+    div= result.msg
+    button.btn.btn-primary(onclick="window.location.href = '/'") 返回首页

@@ -7,4 +7,14 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous")
   body
+    if user
+      div
+        a(href='') #{user.username}
+        a(href='/logout') 登出
+    else
+      div
+        a(href='/login') 登录
+        a(href='/signup') 注册
+    if warning
+      .alert.alert-warning(role="alert")= warning
     block content
