@@ -1,0 +1,47 @@
+extends layout
+
+block content
+    .row
+        .col-3
+            .row
+                img(src=book.img class="img-fluid" alt="...")
+            .row.mt-2
+                a.btn.btn-dark(href=book.url role="button") 前往购买
+            .row.mt-4
+                each tag in book.tags
+                    .col
+                        a.btn.btn-light(href=`/category/${tag.name}`)= tag.name
+        .col
+            h2= book.name
+            h5= book.author
+            h5 ￥#{book.price}
+            p!= book.summary
+            each review in reviews
+                .mt-5!= review.content
+                .float-end by #{review.author}
+    .row.mt-4
+        h4 图书推荐
+        each book in recommends
+            .col.grid-item
+                .card(style='width: 17rem;' title=book.summary)
+                    img.card-img-top(src=book.img alt='Loading...')
+                    .card-body
+                        a.stretched-link(href=`/books/${book.id}`)
+                        h5.card-title= book.name
+                        p.card-text ￥#{book.price}
+                        p.card-text!= book.summary.substr(0, 100)+' <a style="color: gray">点击查看</a>'
+    .row.mt-4
+        h4 读者评价
+        ul.list-group.comments-group
+            li.list-group-item
+                form(action=`/books/${book.id}/newreview`, method='post')
+                    .mb-3
+                        input.form-control(type='text' name='content' placeholder='写点什么吧' required)
+                    button.btn.btn-dark(type='submit') 提交
+            each comment in comments
+                li.list-group-item
+                    h5= comment.username
+                    p= comment.content
+    style.
+        .comments-group h5 { font-style: italic; }
+        .comments-group p { padding-left: 10px; }

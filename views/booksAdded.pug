@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    a.btn.btn-dark.mb-3(href=`/admin/editbook/${book.id}`) 修改图书信息
+    a.btn.btn-dark.mb-3.ms-3(href='/admin/addbooks') 添加新图书
+    .row
+        .col-3
+            .row
+                img(src=book.img class="img-fluid" alt="...")
+            .row.mt-2
+                a.btn.btn-dark(href=book.url role="button") 前往购买
+            .row.mt-4
+                each tag in tags
+                    .col
+                        if tag.has
+                            a.btn.btn-dark(href=`/admin/books/removetag/${book.id}/${tag.id}`)= tag.name
+                        else
+                            a.btn.btn-light(href=`/admin/books/addtag/${book.id}/${tag.id}`)= tag.name
+        .col
+            h2= book.name
+            h5= book.author
+            h5 ￥#{book.price}
+            p!= book.summary
+            each review in reviews
+                .mt-5!= review.content
+                .float-end by #{review.author}
+    .row
+        form(action=`/admin/books/addreview/${book.id}`, method='post')
+            h5.mb-3 添加评论
+            input.form-control.mb-3(type='text' name='author' placeholder='作者' required)
+            textarea.form-control.mb-3(name='content' placeholder='内容' required)
+            .row
+                button.btn.btn-dark.mb-3(type='submit') 提交

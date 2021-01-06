@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h4.book-head= category
+    .grid
+        each book in books
+            .grid-item
+                .card(style='width: 18rem;' title=book.summary)
+                    img.card-img-top(src=book.img alt='...')
+                    .card-body
+                        a.stretched-link(href=`/books/${book.id}`)
+                        h5.card-title= book.name
+                        p.card-text ￥#{book.price}
+                        p.card-text!= book.summary.substr(0, 100)+' <a style="color: gray">点击查看</a>'
+    style.
+        .grid-item { margin: .5rem .25rem; }
+        .book-head { margin: .5rem }
+
+    script(src='https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js')
+    script(src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js")
+    script.
+        // init Masonry
+        const $grid = $('.grid').masonry({
+            // options
+            itemSelector: '.grid-item',
+        });
+        // layout Masonry after each image loads
+        $grid.imagesLoaded().progress(function () {
+            $grid.masonry('layout');
+        });

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    h5 添加标签
+    form(action='/admin/addtag' method='post')
+        .row
+            .col
+                input.form-control.mb-3(type='text' name='name' placeholder='请输入标签名')
+            .col-auto
+                button.btn.btn-dark.mb-3(type='submit') 提交
+    h5.mt-3 添加书籍
+    .row
+        a.btn.btn-dark(href='/admin/addbooks') 前往
+    h5.mt-3 编辑书籍
+    .row
+        input.form-control.mb-3#edit_id(type='number' placeholder='请输入书籍ID')
+        a.btn.btn-dark#edit_btn.mb-3 基础
+        a.btn.btn-dark#edit2_btn 详情
+    script.
+        $("#edit_id").change((e)=>{
+            $("#edit_btn").attr('href', `/admin/editbook/${e.target.value}`)
+            $("#edit2_btn").attr('href', `/admin/booksadded/${e.target.value}`)
+        })

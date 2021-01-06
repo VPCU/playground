@@ -39,9 +39,9 @@
 
 # 用户登录页
 
-## GET /needToLogin
+## GET /login
 
-## POST /needToLogin
+## POST /login
 
 用户登录后，设置session：
 
@@ -59,6 +59,8 @@
 
 # 用户个人信息编辑
 
+## GET /editinfo
+
 ## 修改密码
 ### views/changeUserInfo.pug
 
@@ -68,12 +70,18 @@
 
     password
 
-返回changePasswordResult
-
-### views/changePasswordResult.pug
-    result: {ok: false, msg: ''}
-
 ## 标签
+
+数据表
+
+    user_like_tag
+        uid
+        tid
+
+    tags
+        id
+        name
+        
 
 ### views/changeUserInfo.pug
 
@@ -81,11 +89,11 @@
 
 展示喜欢标签
 
-- 删除喜欢的标签 POST /unliketag/{tagname}
+- 删除喜欢的标签 GET /unliketag/{tagname}
 
 展示所有标签
 
-- 添加喜欢的标签 POST /liketag/{tagname}
+- 添加喜欢的标签 GET /liketag/{tagname}
 
 ### controllers/usersController.js
 
@@ -96,8 +104,9 @@
     boolean
 
 ### models/userRepository.js
-    UserAddTag({uid, tid}) : boolean
-    UserRemoveTag({uid, tid}) : boolean
+    UserHasTag(uid, tid) : boolean
+    UserAddTag(uid, tid)
+    UserRemoveTag(uid, tid)
 
 ### POST /liketag/{tagname}
     redirect to prev page
@@ -112,9 +121,9 @@
 
 ## views/index.pug
 
-    contents: [{head: '推荐', books:[{name: '书名', img:'1.png', author:'作者', price:'11.2'}]}]
+    contents: [{head: '推荐', books:[{name: '书名', img:'1.png', author:'作者', price:'11.2', summary:''}]}]
 
-- 书籍随机推荐 
+- 书籍随机推荐
  
 - 用户喜欢的标签的书籍推荐
 
@@ -122,22 +131,64 @@
 
     getIndexContents(uid)
 
-## controllers/recommendController.js
+## controllers/bookController.js
 
     getRecommends(uid)
+        [{id: '1', name: '书名', img:'1.png', author:'作者', price:'11.2', summary:''}]
     getRecommendsByTag(uid, tag)
+        [{id: '1', name: '书名', img:'1.png', author:'作者', price:'11.2', summary:''}]
 
 ## views/layout.pug
 
 - 搜索功能
 
+数据表
+    
+    books
+        id
+        name
+        price
+        author
+        img
+        summary
+
+    book_has_tag
+        bid
+        tid
+
+## models/bookRepository.js
+
+    getBookById()
+
+    getBookSummaryById()
+    {name: '书名', img:'1.png', author:'作者', price:'11.2', summary:''}
+    
+
 # 书籍详情
+
+数据表
+
+    reviews
+        id
+        bid
+        author
+        content
+
+    comments
+        id
+        bid
+        uid
+        content
 
 ## GET /books/{id}
 
 ## views books.pug
 
-    {name: '书名', img:'1.png', author:'作者', price:'11.2', reviews:[author:'', summary:'', content:''], comments:[username, content]}]}
+    book: {name: '书名', img:'1.png', author:'作者', price:'11.2'}  
+    reviews: [author:'', summary:'', content:'']
+    comments:[{username:'', content:''}]
+    recommends:[{id: '1', name: '书名', img:'', author:'作者', price:'11.2', summary:''}]
+
 相似图书推荐
 评论
 提交评论
@@ -150,10 +201,10 @@
     
     redirect to prev page
 
-## controllers/booksController.js
+## controllers/bookController.js
 
     getBookById(bid)
-    getBookCommend()
+    getCommendsByBookId(bid)
 
 # 搜索结果
 
@@ -163,7 +214,7 @@
     
     [{name: '书名', img:'1.png', author:'作者', price:'11.2'}]
 
-## controllers/booksController.js
+## controllers/bookController.js
 
     searchBooks(keyword)
     [{name: '书名', img:'1.png', author:'作者', price:'11.2'}]
@@ -174,7 +225,7 @@
 
 # 分类浏览书籍
 
-## GET /bookscategory/{category}
+## GET /category/{category}
 
 ## views/category.pug
 
@@ -182,6 +233,22 @@
 
 ## GET /admin/addbooks
 
+## GET /admin/booksadded/id
+
+## GET /admin/books/addtag/id/tag
+
+## GET /admin/books/removetag/id/tag
+
+## POST /admin/books/addreview/id
+
+## GET /admin/settings
+
+## addBooks.pug
+
+    name, price, author, img, url, summary
+
 ## POST /admin/addbooks
+
+## POST /admin/addTag
 
 ## GET /admin/editbooks/{id}

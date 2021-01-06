@@ -6,8 +6,8 @@ block content
             form(method='post')
                 .mb-3
                     label.form-label(for='username1') 用户名
-                    input#username1.form-control(type='text' name='username')
+                    input#username1.form-control(type='text' name='username' required)
                 .mb-3
                     label.form-label(for='InputPassword1') 密码
-                    input#InputPassword1.form-control(type='password' name='password')
+                    input#InputPassword1.form-control(type='password' name='password' required)
                 button.btn.btn-primary(type='submit') 登录

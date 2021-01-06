@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    .container
+        .d-grid.gap-3
+            .card
+                .card-header 修改密码
+                .card-body
+                    form(method='post' action='/changpassword')
+                        .row.g-3.align-items-center
+                            .col
+                                input.form-control(type='password' name='password' required minlength='4')
+                            .col-auto
+                                button.btn.btn-primary(type='submit') 确定
+            .card
+                .card-header 我喜欢的书籍类型
+                .card-body
+                    .like-tags
+                        each tag in tags
+                            if tag.like
+                                a.btn.btn-primary(type='button' href=`/unliketag/${tag.id}`)= tag.name
+                            else
+                                a.btn.btn-light(type='button' href=`/liketag/${tag.id}`)= tag.name
+    style.
+        .like-tags a {margin: .5rem .25rem;}
+

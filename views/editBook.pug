@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    form(method='post')
+        .mb-3
+            label.form-label 书籍名
+            input.form-control(type='text' name='name' value=book.name)
+        .mb-3
+            label.form-label 作者
+            input.form-control(type='text' name='author' value=book.author)
+        .mb-3
+            label.form-label 价格
+            input.form-control(type='text' name='price' value=book.price)
+        .mb-3
+            label.form-label 封面图片
+            input.form-control(type='text' name='img' value=book.img)
+        .mb-3
+            label.form-label 购买链接
+            input.form-control(type='text' name='url' value=book.url)
+        .mb-3
+            label.form-label 简介
+            input.form-control(type='text' name='summary' value=book.summary)
+        .row
+            button.btn.btn-secondary.mb-3(type='reset') 重置
+            button.btn.btn-primary.mb-3(type='submit') 提交
